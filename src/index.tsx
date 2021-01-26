@@ -1,15 +1,20 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
-import { ChakraProvider } from "@chakra-ui/react";
+import { ChakraProvider, extendTheme, CSSReset } from "@chakra-ui/react";
 import { QueryClientProvider, QueryClient } from "react-query";
+import { customTheme } from "./customStyles/theme";
+import { Fonts } from "./customStyles/Font";
 
 const queryClient = new QueryClient();
+const theme = extendTheme(customTheme);
 
 ReactDOM.render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
-      <ChakraProvider>
+      <ChakraProvider theme={theme}>
+        <Fonts />
+        <CSSReset />
         <App />
       </ChakraProvider>
     </QueryClientProvider>

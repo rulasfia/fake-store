@@ -1,16 +1,32 @@
 import React from "react";
-import { Box, Flex, Heading, Text, Image } from "@chakra-ui/react";
+import {
+  useToast,
+  Flex,
+  VStack,
+  Link,
+  Heading,
+  Image,
+  Button,
+} from "@chakra-ui/react";
+import type { ProductItemType } from "../App";
 
-export type ProductItemType = {
-  title: String;
-  price: Number;
-  category: String;
-  img: string;
-};
+type ItemProps = ProductItemType & { addToCart(a: any): void };
 
-function Product({ title, price, category, img }: ProductItemType) {
+function Product(props: ItemProps) {
+  const { title, img, price, category }: ProductItemType = props;
+  const toast = useToast();
+
   return (
-    <Box p="8" m="4" w="22%" border="1px" borderColor="gray.300" rounded="lg">
+    <Flex
+      flexDir="column"
+      justify="space-between"
+      p="8"
+      m="4"
+      w="22%"
+      border="1px"
+      borderColor="gray.300"
+      rounded="lg"
+    >
       <Image
         src={img}
         my="4"
@@ -19,17 +35,37 @@ function Product({ title, price, category, img }: ProductItemType) {
         w="70%"
         h="50%"
         objectFit="contain"
+        cursor="pointer"
+        onClick={() => alert("helo")}
       />
-      <Heading fontSize="md" fontWeight="regular">
-        {title}
-      </Heading>
-      <Heading my="4" fontSize="xl">
-        $ {price}
-      </Heading>
-      <Text my="4" color="gray.600">
-        {category}
-      </Text>
-    </Box>
+
+      <VStack h="auto" w="full">
+        <Link w="full" href="#" fontSize="md" fontWeight="regular">
+          {title.length > 62 ? `${title.slice(0, 62)}...` : title}
+        </Link>
+        <Heading w="full" my="4" fontSize="2xl">
+          $ {price}
+        </Heading>
+        <Link alignSelf="start" my="4" color="gray.500">
+          {category}
+        </Link>
+      </VStack>
+      <Button
+        onClick={() => {
+          props.addToCart({ img, title, price, category });
+          toast({
+            position: "bottom-right",
+            title: "Added to cart.",
+            description: "Item successfully added to cart.",
+            status: "success",
+            duration: 5000,
+            isClosable: true,
+          });
+        }}
+      >
+        Add to Cart
+      </Button>
+    </Flex>
   );
 }
 
