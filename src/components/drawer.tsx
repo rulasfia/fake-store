@@ -8,6 +8,7 @@ import {
   DrawerOverlay,
   DrawerContent,
   DrawerCloseButton,
+  Heading,
 } from "@chakra-ui/react";
 
 export type DrawerActionType = {
@@ -22,6 +23,7 @@ export default function DrawerCart({ isOpen, onClose, btnRef, carts }: any) {
   return (
     <>
       <Drawer
+        size="md"
         isOpen={isOpen}
         placement="right"
         onClose={onClose}
@@ -33,9 +35,13 @@ export default function DrawerCart({ isOpen, onClose, btnRef, carts }: any) {
             <DrawerHeader>Cart</DrawerHeader>
 
             <DrawerBody>
-              {carts.map((cart: any, i: number) => (
-                <CartItem key={i} cart={cart} />
-              ))}
+              {carts.length > 0 ? (
+                carts.map((cart: any, i: number) => (
+                  <CartItem key={i} cart={cart} />
+                ))
+              ) : (
+                <Heading>Cart is Empty</Heading>
+              )}
             </DrawerBody>
 
             <DrawerFooter>

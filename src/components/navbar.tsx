@@ -1,5 +1,4 @@
-import { useRef } from "react";
-import { Text, Button, HStack, Spacer, useDisclosure } from "@chakra-ui/react";
+import { Text, Button, HStack, Spacer } from "@chakra-ui/react";
 import { IoCart } from "react-icons/io5";
 
 function Navbar(props: any) {
