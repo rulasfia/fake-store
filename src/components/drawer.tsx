@@ -9,7 +9,12 @@ import {
   DrawerContent,
   DrawerCloseButton,
   Heading,
+  VStack,
+  StackDivider,
+  HStack,
+  Spacer,
 } from "@chakra-ui/react";
+import { DeleteIcon } from "@chakra-ui/icons";
 
 export type DrawerActionType = {
   isOpen: boolean;
@@ -17,7 +22,13 @@ export type DrawerActionType = {
   btnRef: React.MutableRefObject<any>;
 };
 
-export default function DrawerCart({ isOpen, onClose, btnRef, carts }: any) {
+export default function DrawerCart({
+  isOpen,
+  onClose,
+  btnRef,
+  carts,
+  setCarts,
+}: any) {
   console.log(carts);
 
   return (
@@ -35,20 +46,33 @@ export default function DrawerCart({ isOpen, onClose, btnRef, carts }: any) {
             <DrawerHeader>Cart</DrawerHeader>
 
             <DrawerBody>
-              {carts.length > 0 ? (
-                carts.map((cart: any, i: number) => (
-                  <CartItem key={i} cart={cart} />
-                ))
-              ) : (
-                <Heading>Cart is Empty</Heading>
-              )}
+              <VStack divider={<StackDivider borderColor="gray.200" />}>
+                {carts.length > 0 ? (
+                  carts.map((cart: any, i: number) => (
+                    <CartItem key={i} cart={cart} setCarts={setCarts} />
+                  ))
+                ) : (
+                  <Heading>Cart is Empty</Heading>
+                )}
+              </VStack>
             </DrawerBody>
 
             <DrawerFooter>
-              <Button variant="outline" mr={3} onClick={onClose}>
-                Cancel
+              <Button
+                leftIcon={<DeleteIcon />}
+                colorScheme="red"
+                variant="outline"
+                onClick={() => setCarts([])}
+              >
+                Delete All
               </Button>
-              <Button color="blue">Save</Button>
+              <Spacer />
+              <HStack>
+                <Button variant="outline" mr={3} onClick={onClose}>
+                  Cancel
+                </Button>
+                <Button colorScheme="green">Purchase</Button>
+              </HStack>
             </DrawerFooter>
           </DrawerContent>
         </DrawerOverlay>

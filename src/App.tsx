@@ -5,6 +5,7 @@ import { BrowserRouter } from "react-router-dom";
 import Product from "./components/product";
 import Navbar from "./components/navbar";
 import Drawer from "./components/drawer";
+import Footer from "./components/footer";
 import { Flex, VStack, useDisclosure } from "@chakra-ui/react";
 
 export type CartItemType = {
@@ -22,6 +23,7 @@ export interface ProductItemType {
   price: number;
   category: string;
   img: string;
+  qty: number;
 }
 
 const fetcher = async (): Promise<CartItemType[]> => {
@@ -30,13 +32,12 @@ const fetcher = async (): Promise<CartItemType[]> => {
 };
 
 function App() {
-  const [carts, setCarts] = useState<CartItemType[]>([]);
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const btnRef = useRef<any>();
-
   const { data, isLoading, error } = useQuery("products", fetcher, {
     keepPreviousData: true,
   });
+  const [carts, setCarts] = useState<CartItemType[]>([]);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const btnRef = useRef<any>();
 
   const addToCart = (item: any): void => {
     setCarts([...carts, item]);
@@ -54,8 +55,9 @@ function App() {
           onClose={onClose}
           btnRef={btnRef}
           carts={carts}
+          setCarts={setCarts}
         />
-        <Flex dir="row" m="12" justify="space-between" wrap="wrap">
+        <Flex dir="row" py="20" px="12" justify="space-between" wrap="wrap">
           {data?.map((item) => {
             return (
               <Product
@@ -64,11 +66,13 @@ function App() {
                 title={item.title}
                 price={item.price}
                 category={item.category}
+                qty={0}
                 addToCart={addToCart}
               />
             );
           })}
         </Flex>
+        <Footer />
       </VStack>
     </BrowserRouter>
   );

@@ -3,7 +3,15 @@ import { IoCart } from "react-icons/io5";
 
 function Navbar(props: any) {
   return (
-    <HStack w="full" py="4" px="12" dir="row" justify="space-between">
+    <HStack
+      position="fixed"
+      w="full"
+      py="4"
+      px="12"
+      bg="white"
+      dir="row"
+      justify="space-between"
+    >
       <Text fontWeight="bold" fontSize="2xl">
         Fake Store
       </Text>

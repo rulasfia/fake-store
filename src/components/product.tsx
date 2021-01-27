@@ -10,7 +10,11 @@ import {
 } from "@chakra-ui/react";
 import type { ProductItemType } from "../App";
 
-type ItemProps = ProductItemType & { addToCart(a: any): void };
+// type ItemProps = ProductItemType & { addToCart(a: any): void, setCarts():  };
+
+interface ItemProps extends ProductItemType {
+  addToCart(a: any): void;
+}
 
 function Product(props: ItemProps) {
   const { title, img, price, category }: ProductItemType = props;
@@ -20,7 +24,8 @@ function Product(props: ItemProps) {
     <Flex
       flexDir="column"
       justify="space-between"
-      p="8"
+      px="8"
+      py="6"
       m="4"
       w="22%"
       border="1px"
@@ -33,10 +38,10 @@ function Product(props: ItemProps) {
         mx="auto"
         alt="Product"
         w="70%"
-        h="50%"
+        h="40%"
         objectFit="contain"
         cursor="pointer"
-        onClick={() => alert("helo")}
+        onClick={() => alert("Detail page masih dalam pengembangan")}
       />
 
       <VStack h="auto" w="full">
