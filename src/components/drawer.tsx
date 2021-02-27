@@ -15,6 +15,8 @@ import {
   Spacer,
 } from "@chakra-ui/react";
 import { DeleteIcon } from "@chakra-ui/icons";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import { clearCart } from "../redux/cartSlice";
 
 export type DrawerActionType = {
   isOpen: boolean;
@@ -22,15 +24,9 @@ export type DrawerActionType = {
   btnRef: React.MutableRefObject<any>;
 };
 
-export default function DrawerCart({
-  isOpen,
-  onClose,
-  btnRef,
-  carts,
-  setCarts,
-}: any) {
-  console.log(carts);
-
+export default function DrawerCart({ isOpen, onClose, btnRef }: any) {
+  const { items } = useAppSelector((state) => state.cart);
+  const dispatch = useAppDispatch();
   return (
     <>
       <Drawer
@@ -47,9 +43,9 @@ export default function DrawerCart({
 
             <DrawerBody>
               <VStack divider={<StackDivider borderColor="gray.200" />}>
-                {carts.length > 0 ? (
-                  carts.map((cart: any, i: number) => (
-                    <CartItem key={i} cart={cart} setCarts={setCarts} />
+                {items?.length !== 0 ? (
+                  items?.map((cart: any, i: number) => (
+                    <CartItem key={i} cart={cart} />
                   ))
                 ) : (
                   <Heading>Cart is Empty</Heading>
@@ -62,7 +58,7 @@ export default function DrawerCart({
                 leftIcon={<DeleteIcon />}
                 colorScheme="red"
                 variant="outline"
-                onClick={() => setCarts([])}
+                onClick={() => dispatch(clearCart())}
               >
                 Delete All
               </Button>

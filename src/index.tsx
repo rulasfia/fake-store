@@ -1,8 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "./App";
 import { ChakraProvider, extendTheme, CSSReset } from "@chakra-ui/react";
 import { QueryClientProvider, QueryClient } from "react-query";
+import store from "./redux/store";
+import { Provider } from "react-redux";
+import App from "./App";
 import { customTheme } from "./customStyles/theme";
 import { Fonts } from "./customStyles/Font";
 
@@ -12,11 +14,13 @@ const theme = extendTheme(customTheme);
 ReactDOM.render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
-      <ChakraProvider theme={theme}>
-        <Fonts />
-        <CSSReset />
-        <App />
-      </ChakraProvider>
+      <Provider store={store}>
+        <ChakraProvider theme={theme}>
+          <Fonts />
+          <CSSReset />
+          <App />
+        </ChakraProvider>
+      </Provider>
     </QueryClientProvider>
   </React.StrictMode>,
   document.getElementById("root")

@@ -8,16 +8,15 @@ import {
   Image,
   Button,
 } from "@chakra-ui/react";
-import type { ProductItemType } from "../App";
+import type { ProductItemType } from "../AppType";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import { addToCart } from "../redux/cartSlice";
 
 // type ItemProps = ProductItemType & { addToCart(a: any): void, setCarts():  };
 
-interface ItemProps extends ProductItemType {
-  addToCart(a: any): void;
-}
-
-function Product(props: ItemProps) {
-  const { title, img, price, category }: ProductItemType = props;
+function Product({ id, title, img, price, category }: ProductItemType) {
+  const { items } = useAppSelector((state) => state.cart);
+  const dispatch = useAppDispatch();
   const toast = useToast();
 
   return (
@@ -57,7 +56,9 @@ function Product(props: ItemProps) {
       </VStack>
       <Button
         onClick={() => {
-          props.addToCart({ img, title, price, category });
+          dispatch(addToCart({ id, img, title, price, category, qty: 1 }));
+          // addToCart();
+          console.log(items);
           toast({
             position: "bottom-right",
             title: "Added to cart.",

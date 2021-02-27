@@ -1,10 +1,15 @@
 import { Text, Button, HStack, Spacer } from "@chakra-ui/react";
 import { IoCart } from "react-icons/io5";
+import { useAppSelector } from "../redux/hooks";
 
 function Navbar(props: any) {
+  const { items } = useAppSelector((state) => state.cart);
   return (
     <HStack
       position="fixed"
+      zIndex={2}
+      borderBottom="1px"
+      borderColor="gray.300"
       w="full"
       py="4"
       px="12"
@@ -24,7 +29,7 @@ function Navbar(props: any) {
         colorScheme="green"
         onClick={props.onOpen}
       >
-        Cart
+        Cart ({items?.length})
       </Button>
     </HStack>
   );

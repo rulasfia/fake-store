@@ -12,10 +12,14 @@ import {
   Flex,
 } from "@chakra-ui/react";
 import { AddIcon, MinusIcon, DeleteIcon } from "@chakra-ui/icons";
-import type { ProductItemType } from "../App";
+import type { ProductItemType } from "../AppType";
+import { useAppDispatch } from "../redux/hooks";
+import { deleteFromCart } from "../redux/cartSlice";
 
-function CartItem({ cart, setCarts }: any) {
-  const { img, title, price, category }: ProductItemType = cart;
+function CartItem({ cart }: any) {
+  const dispatch = useAppDispatch();
+
+  const { id, img, title, price, category }: ProductItemType = cart;
   const [qty, setQty] = useState<number>(1);
 
   return (
@@ -48,7 +52,7 @@ function CartItem({ cart, setCarts }: any) {
             variant="outline"
             aria-label="delete"
             icon={<DeleteIcon />}
-            onClick={() => alert("Fitur masih dalam pengembangan")}
+            onClick={() => dispatch(deleteFromCart(Number(id)))}
           />
         </Flex>
 
