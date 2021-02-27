@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState } from "./store";
 import type { ProductItemType } from "../AppType";
 
 // Define a type for the slice state
